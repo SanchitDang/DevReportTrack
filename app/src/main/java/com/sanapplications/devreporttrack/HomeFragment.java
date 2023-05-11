@@ -2,31 +2,28 @@ package com.sanapplications.devreporttrack;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.content.Intent;
-import android.os.Bundle;
+
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,20 +35,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-
-import java.util.ArrayList;
-import java.util.List;
+public class HomeFragment extends Fragment {
 
 
-public class dashboard extends AppCompatActivity {
+    public HomeFragment() {
+        // Required empty public constructor
+    }
 
+    View view;
     FloatingActionButton fab;
     DatabaseReference databaseReference;
     //ValueEventListener eventListener;
@@ -60,17 +51,22 @@ public class dashboard extends AppCompatActivity {
     MyAdapter adapter;
     SearchView searchView;
 
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
-        recyclerView = findViewById(R.id.recyclerView);
-        fab = findViewById(R.id.fab);
-        searchView = findViewById(R.id.search);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+        fab = view.findViewById(R.id.fab);
+        searchView = view.findViewById(R.id.search);
         searchView.clearFocus();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(dashboard.this, 1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
-        AlertDialog.Builder builder = new AlertDialog.Builder(dashboard.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setCancelable(false);
 
         builder.setView(R.layout.progress_layout);
@@ -78,7 +74,7 @@ public class dashboard extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         dataList = new ArrayList<>();
-        adapter = new MyAdapter(dashboard.this, dataList);
+        adapter = new MyAdapter(getContext(), dataList);
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -97,7 +93,7 @@ public class dashboard extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(dashboard.this, "Error getting data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Error getting data", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
@@ -107,30 +103,6 @@ public class dashboard extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Android Tutorials");
 
         dialog.show();
-
-
-//        eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                dataList.clear();
-//
-//
-//                for (DataSnapshot itemSnapshot: snapshot.getChildren()){
-//                    DataClass dataClass = itemSnapshot.getValue(DataClass.class);
-//                    dataClass.setKey(itemSnapshot.getKey());
-//                    dataList.add(dataClass);
-//                }
-//                adapter.notifyDataSetChanged();
-//                dialog.dismiss();
-//
-//
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                dialog.dismiss();
-//            }
-//        });
-
 
         ListenerRegistration eventListener = db.collection("Android Tutorials").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -168,11 +140,16 @@ public class dashboard extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(dashboard.this, UploadActivity.class);
+                Intent intent = new Intent(getContext(), UploadActivity.class);
                 startActivity(intent);
             }
         });
+
+        return view;
+
     }
+
+
     public void searchList(String text){
         ArrayList<DataClass> searchList = new ArrayList<>();
         for (DataClass dataClass: dataList){
@@ -182,4 +159,5 @@ public class dashboard extends AppCompatActivity {
         }
         adapter.searchDataList(searchList);
     }
+
 }

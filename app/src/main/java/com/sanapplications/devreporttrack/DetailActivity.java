@@ -12,8 +12,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -66,7 +64,7 @@ public class DetailActivity extends AppCompatActivity {
                         //reference.child(key).removeValue();
                         docRef.delete();
                         Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(DetailActivity.this, dashboard.class));
+                        startActivity(new Intent(DetailActivity.this, HistoryActivity.class));
                         finish();
                     }
                 });

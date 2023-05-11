@@ -108,7 +108,7 @@ public class verifyOTPActivity extends AppCompatActivity {
                                                         DocumentSnapshot document = task.getResult();
                                                         if (document.exists()) {
                                                             // User exists in Firestore, navigate to home screen
-                                                            Intent intent = new Intent(getApplicationContext(), dashboard.class);
+                                                            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
                                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                             startActivity(intent);
                                                             finish();

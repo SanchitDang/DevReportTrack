@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -156,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Toast.makeText(RegisterActivity.this, "Data uploaded successfully", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(RegisterActivity.this, dashboard.class);
+                                                Intent intent = new Intent(RegisterActivity.this, HistoryActivity.class);
                                                 startActivity(intent);
                                                 finish();
                                             }
