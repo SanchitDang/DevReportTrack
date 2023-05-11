@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -144,7 +145,7 @@ public class UploadActivity extends AppCompatActivity {
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("UsersReport").document("SANCHITDANG").collection("Reports").document(currentDate)
+        db.collection("UsersReport").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Reports").document(currentDate)
                 .set(dataClass)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
