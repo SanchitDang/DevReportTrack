@@ -1,97 +1,89 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
-        <!-- Add some spacing -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Upload Your Profile"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <!-- Add some spacing -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
+            <ImageView
+                android:id="@+id/imageViewPhoto"
+                android:layout_width="350dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/uploadimg" />
 
-        <EditText
-            android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name" />
+            <EditText
+                android:id="@+id/editTextName"
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/lavender_border"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="8dp"
+                android:hint="Name"
+                android:padding="12dp"
+                android:textColor="@color/grey" />
 
-        <!-- Add some spacing -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
+            <EditText
+                android:id="@+id/editTextAddress"
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/lavender_border"
+                android:drawableLeft="@drawable/baseline_home_24"
+                android:drawablePadding="8dp"
+                android:hint="Address"
+                android:padding="12dp"
+                android:textColor="@color/grey" />
 
-        <EditText
-            android:id="@+id/editTextAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Address" />
 
-        <!-- Add some spacing -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
+            <Button
+                android:id="@+id/buttonChooseResume"
+                android:layout_width="350dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="30dp"
+                android:text="CHOOSE RESUME"
+                android:textSize="18sp"
+                app:cornerRadius="30dp" />
 
-        <ImageView
-            android:id="@+id/imageViewPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_android_black_24dp" />
+            <Button
+                android:id="@+id/buttonUpload"
+                android:layout_width="350dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="8dp"
+                android:text="UPLOAD"
+                android:textSize="18sp"
+                app:cornerRadius="30dp" />
 
-        <!-- Add some spacing -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
+            <TextView
+                android:id="@+id/loginRedirectText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="Picture and Resume are mandatory"
+                android:textColor="@color/lavender"
+                android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/buttonChoosePhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Choose Photo" />
-
-        <!-- Add some spacing -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
-
-        <Button
-            android:id="@+id/buttonChooseResume"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Choose Resume" />
-
-        <!-- Add some spacing -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
-
-        <Button
-            android:id="@+id/buttonUpload"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Upload" />
-
-        <!-- Add some spacing -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
+        </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>

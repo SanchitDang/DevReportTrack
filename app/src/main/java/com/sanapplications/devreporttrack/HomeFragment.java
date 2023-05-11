@@ -47,8 +47,6 @@ public class HomeFragment extends Fragment {
 
     View view;
     FloatingActionButton fab;
-    DatabaseReference databaseReference;
-    //ValueEventListener eventListener;
     RecyclerView recyclerView;
     List<DataClass> dataList;
     MyAdapter adapter;
@@ -107,7 +105,10 @@ public class HomeFragment extends Fragment {
 
         dialog.show();
 
-        ListenerRegistration eventListener = db.collection("UsersReport").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Reports").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        ListenerRegistration eventListener = db.collection("UsersReport").document(
+               // FirebaseAuth.getInstance().getCurrentUser().getUid()
+                "SANCHITDANG"
+        ).collection("Reports").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {

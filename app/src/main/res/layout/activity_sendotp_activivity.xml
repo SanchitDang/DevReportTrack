@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:overScrollMode="never"
     android:scrollbars="none"
-    android:background="#21FFC107"
     tools:context=".sendotpActivivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
 
@@ -102,9 +102,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/get_otp"
                 android:layout_margin="30dp"
-                android:textColor="@color/colortextprimary"
                 android:background="@color/lavender"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="18sp"
+                />
 
             <ProgressBar
                 android:id="@+id/progressbarforotp"

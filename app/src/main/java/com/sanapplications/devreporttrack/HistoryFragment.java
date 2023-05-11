@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -50,9 +52,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-// ...
-
+import android.app.DownloadManager;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 
 public class HistoryFragment extends Fragment {
@@ -62,10 +76,8 @@ public class HistoryFragment extends Fragment {
     }
 
     View view;
-    //FloatingActionButton fab;
-   // ImageView imgView;
-    DatabaseReference databaseReference;
-    //ValueEventListener eventListener;
+    FloatingActionButton fab;
+    ImageView imgView;
     RecyclerView recyclerView;
     List<DataClass> dataList;
     MyAdapter adapter;
@@ -81,9 +93,9 @@ public class HistoryFragment extends Fragment {
 
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        //fab = view.findViewById(R.id.fab);
+        fab = view.findViewById(R.id.fab);
         searchView = view.findViewById(R.id.search);
-       // imgView = view.findViewById(R.id.recImage);
+        imgView = view.findViewById(R.id.recImage);
         searchView.clearFocus();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -99,30 +111,34 @@ public class HistoryFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference tutorialsRef = db.collection("UsersReport");
 
-        db.collection("UsersReport").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot querySnapshot) {
-                        for (QueryDocumentSnapshot document : querySnapshot) {
-                            Log.d("Firestore", document.getId() + " => " + document.getData());
-                        }
-                        dialog.dismiss();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), "Error getting data", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
+
+//        CollectionReference tutorialsRef = db.collection("UsersReport");
+//        db.collection("UsersReport").get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot querySnapshot) {
+//                        for (QueryDocumentSnapshot document : querySnapshot) {
+//                            Log.d("Firestore", document.getId() + " => " + document.getData());
+//                        }
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(getContext(), "Error getting data", Toast.LENGTH_SHORT).show();
+//                        dialog.dismiss();
+//                    }
+//                });
 
 
         dialog.show();
 
-        ListenerRegistration eventListener = db.collection("UsersReport").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Reports").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        ListenerRegistration eventListener = db.collection("UsersReport").document(
+                //FirebaseAuth.getInstance().getCurrentUser().getUid()
+                "SANCHITDANG"
+        ).collection("Reports").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -136,6 +152,9 @@ public class HistoryFragment extends Fragment {
                     DataClass dataClass = document.toObject(DataClass.class);
                     dataClass.setKey(document.getId());
                     dataList.add(dataClass);
+
+                    //Toast.makeText(getContext(), "Clicked item: " + dataClass.getKey(), Toast.LENGTH_SHORT).show(); // Add this line to show toast message
+
                 }
 
                 adapter.notifyDataSetChanged();
@@ -159,32 +178,33 @@ public class HistoryFragment extends Fragment {
 //        imgView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                String url = "https://firebasestorage.googleapis.com/v0/b/devreporttrack.appspot.com/o/Android%20Images%2Fmsf%3A73?alt=media&token=44647fde-ae72-46ca-bbb2-65622c25b448";
-//                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+//
+//
+//                String downloadUrl = "https://firebasestorage.googleapis.com/v0/b/devreporttrack.appspot.com/o/resumes%2F00f9a272-5988-4906-bab2-c1255c72405a?alt=media&token=f7566d8f-8a96-48c2-bc54-5026694a46f0";
+//
+//                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(
+//                        downloadUrl
+//                ));
+//
+//                String title = URLUtil.guessFileName(
+//                        downloadUrl
+//                        , null, "application/pdf");
+//                request.setTitle(title);
+//                request.setDescription("Downloading pls wait");
+//                String cookie = CookieManager.getInstance().getCookie(downloadUrl);
+//                request.addRequestHeader("cookie",cookie);
 //                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-//                request.setTitle("File Download");
-//                request.setDescription("Downloading file...");
-//                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "file.pdf");
+//                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
 //
-//                DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
-//                long downloadId = downloadManager.enqueue(request);
+//                DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+//                downloadManager.enqueue(request);
 //
-//                // Create a broadcast receiver to listen for download completion
-//                BroadcastReceiver onComplete = new BroadcastReceiver() {
-//                    public void onReceive(Context context, Intent intent) {
-//                        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-//                        if (id == downloadId) {
-//                            // Handle the download completion
-//                            Toast.makeText(context, "Download complete!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                };
+//                Toast.makeText(getActivity(), "Downloading Started", Toast.LENGTH_SHORT).show();
 //
-//                // Register the broadcast receiver
-//                getContext().registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+//
 //            }
 //        });
-
+//
 
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override

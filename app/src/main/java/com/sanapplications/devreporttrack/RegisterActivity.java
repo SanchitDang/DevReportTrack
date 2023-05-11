@@ -37,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextAddress;
     private ImageView imageViewPhoto;
-    private Button buttonChoosePhoto, buttonChooseResume, buttonUpload;
+    private Button  buttonChooseResume, buttonUpload;
     private Uri photoUri, resumeUri;
 
     private FirebaseStorage storage;
@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         editTextName = findViewById(R.id.editTextName);
         editTextAddress = findViewById(R.id.editTextAddress);
         imageViewPhoto = findViewById(R.id.imageViewPhoto);
-        buttonChoosePhoto = findViewById(R.id.buttonChoosePhoto);
+        //buttonChoosePhoto = findViewById(R.id.buttonChoosePhoto);
         buttonChooseResume = findViewById(R.id.buttonChooseResume);
         buttonUpload = findViewById(R.id.buttonUpload);
 
@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         storageReference = storage.getReference();
         db = FirebaseFirestore.getInstance();
 
-        buttonChoosePhoto.setOnClickListener(new View.OnClickListener() {
+        imageViewPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -109,6 +109,8 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        Toast.makeText(RegisterActivity.this, "Uploading docs. Pleas Wait!", Toast.LENGTH_LONG).show();
+
         final StorageReference photoRef = storageReference.child("photos/" + UUID.randomUUID().toString());
         final StorageReference resumeRef = storageReference.child("resumes/" + UUID.randomUUID().toString());
 
@@ -141,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 final Uri resumeUrl = task.getResult();
 
-                            final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            //final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 final Map<String, Object> user = new HashMap<>();
                                 user.put("name", name);
                                 user.put("address", address);
@@ -149,8 +151,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 user.put("resumeUrl", resumeUrl.toString());
 
                                 db.collection("USERS").document(
-                                        currentUserId
-                                        //"SANCHITDANG"
+                                       // currentUserId
+                                        "SANCHITDANG"
                                         ).set(user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

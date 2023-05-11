@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.history:
                     replaceFragment(new HistoryFragment());
                     break;
-//                case R.id.profile:
-//                    replaceFragment(new HistoryActivity());
-//                    break;
             }
 
             return  true;
