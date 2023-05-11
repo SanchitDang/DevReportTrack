@@ -76,11 +76,9 @@ public class HistoryFragment extends Fragment {
     }
 
     View view;
-    FloatingActionButton fab;
-    ImageView imgView;
     RecyclerView recyclerView;
     List<DataClass> dataList;
-    MyAdapter adapter;
+    MyAdapterHistory adapter;
     SearchView searchView;
 
 
@@ -91,11 +89,8 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_history, container, false);
 
-
         recyclerView = view.findViewById(R.id.recyclerView);
-        fab = view.findViewById(R.id.fab);
         searchView = view.findViewById(R.id.search);
-        imgView = view.findViewById(R.id.recImage);
         searchView.clearFocus();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -107,7 +102,7 @@ public class HistoryFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
         dataList = new ArrayList<>();
-        adapter = new MyAdapter(getContext(), dataList);
+        adapter = new MyAdapterHistory(getContext(), dataList);
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -206,13 +201,6 @@ public class HistoryFragment extends Fragment {
 //        });
 //
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getContext(), UploadActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         return view;
 

@@ -62,7 +62,7 @@ public class sendotpActivivity extends AppCompatActivity {
 //                downloadManager.enqueue(request);
 //
 //                Toast.makeText(sendotpActivivity.this, "Downloading Started", Toast.LENGTH_SHORT).show();
-//
+
 //
 
 

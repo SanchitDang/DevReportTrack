@@ -19,7 +19,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/recImage"
-            android:src="@drawable/baseline_get_app_24"
+            android:src="@drawable/baseline_picture_as_pdf_24"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="15dp"

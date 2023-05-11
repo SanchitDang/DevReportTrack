@@ -2,9 +2,16 @@ package com.sanapplications.devreporttrack;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +28,8 @@ import com.google.firebase.storage.StorageReference;
 public class DetailActivity extends AppCompatActivity {
 
     TextView detailDesc, detailTitle, detailLang;
-    ImageView detailImage;
+
+    Button buttonOpenPdf, buttonDownloadPdf;
     FloatingActionButton deleteButton, editButton;
     String key = "";
     String imageUrl = "";
@@ -32,9 +40,10 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         detailDesc = findViewById(R.id.detailDesc);
-        detailImage = findViewById(R.id.detailImage);
+        buttonOpenPdf = findViewById(R.id.buttonOpenPdf);
         detailTitle = findViewById(R.id.detailTitle);
         deleteButton = findViewById(R.id.deleteButton);
+        buttonDownloadPdf = findViewById(R.id.buttonDownloadPdf);
         //editButton = findViewById(R.id.editButton);
         detailLang = findViewById(R.id.detailLang);
 
@@ -45,7 +54,7 @@ public class DetailActivity extends AppCompatActivity {
             detailLang.setText(bundle.getString("Language"));
             key = bundle.getString("Key");
             imageUrl = bundle.getString("Image");
-            Glide.with(this).load(bundle.getString("Image")).into(detailImage);
+            //Glide.with(this).load(bundle.getString("Image")).into(detailImage);
         }
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +85,49 @@ public class DetailActivity extends AppCompatActivity {
                 });
             }
         });
+
+        buttonOpenPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //String pdfUrl = "http://www.example.com/sample.pdf";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse(imageUrl), "application/pdf");
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    // If no PDF viewer app is installed, prompt the user to install one
+                    Toast.makeText(DetailActivity.this, "No PDF viewer app found.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        buttonDownloadPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(
+                        imageUrl
+                ));
+
+                String title = URLUtil.guessFileName(
+                        imageUrl
+                        , null, "application/pdf");
+                request.setTitle(title);
+                request.setDescription("Downloading pls wait");
+                String cookie = CookieManager.getInstance().getCookie(imageUrl);
+                request.addRequestHeader("cookie",cookie);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
+
+                DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                downloadManager.enqueue(request);
+
+                Toast.makeText(DetailActivity.this, "Downloading Started", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
 
 //        editButton.setOnClickListener(new View.OnClickListener() {

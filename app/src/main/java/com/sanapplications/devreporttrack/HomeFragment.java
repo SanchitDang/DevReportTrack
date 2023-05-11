@@ -150,6 +150,7 @@ public class HomeFragment extends Fragment {
 //                return true;
 //            }
 //        });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
