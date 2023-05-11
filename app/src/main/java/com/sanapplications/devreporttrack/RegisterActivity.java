@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -140,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 final Uri resumeUrl = task.getResult();
 
-                            //    final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 final Map<String, Object> user = new HashMap<>();
                                 user.put("name", name);
                                 user.put("address", address);
@@ -148,14 +149,14 @@ public class RegisterActivity extends AppCompatActivity {
                                 user.put("resumeUrl", resumeUrl.toString());
 
                                 db.collection("USERS").document(
-                                        //currentUserId
-                                        "LODAAAAAAAAAAAAAAAAAAAAA"
+                                        currentUserId
+                                        //"SANCHITDANG"
                                         ).set(user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Toast.makeText(RegisterActivity.this, "Data uploaded successfully", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(RegisterActivity.this, HistoryActivity.class);
+                                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                                 startActivity(intent);
                                                 finish();
                                             }

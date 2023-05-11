@@ -21,6 +21,10 @@ public class DataClass {
         return dataTitle;
     }
 
+    public String getLang() {
+        return dataLang;
+    }
+
     public String getDataDesc() {
         return dataDesc;
     }

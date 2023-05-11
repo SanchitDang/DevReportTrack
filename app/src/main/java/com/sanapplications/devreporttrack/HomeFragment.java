@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -32,7 +33,9 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -49,7 +52,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     List<DataClass> dataList;
     MyAdapter adapter;
-    SearchView searchView;
+    //SearchView searchView;
 
 
 
@@ -62,8 +65,8 @@ public class HomeFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         fab = view.findViewById(R.id.fab);
-        searchView = view.findViewById(R.id.search);
-        searchView.clearFocus();
+        //searchView = view.findViewById(R.id.search);
+       // searchView.clearFocus();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -78,33 +81,33 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference tutorialsRef = db.collection("Android Tutorials");
 
-        db.collection("Android Tutorials").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot querySnapshot) {
-                        for (QueryDocumentSnapshot document : querySnapshot) {
-                            Log.d("Firestore", document.getId() + " => " + document.getData());
-                        }
-                        dialog.dismiss();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), "Error getting data", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
+        //CollectionReference tutorialsRef = db.collection("UsersReport");
+        // TO GET DATA, ONLY CONSOLE
+//        db.collection("Android Tutorials").get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot querySnapshot) {
+//                        for (QueryDocumentSnapshot document : querySnapshot) {
+//                            Log.d("Firestore", document.getId() + " => " + document.getData());
+//                        }
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(getContext(), "Error getting data", Toast.LENGTH_SHORT).show();
+//                        dialog.dismiss();
+//                    }
+//                });
 
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Android Tutorials");
 
         dialog.show();
 
-        ListenerRegistration eventListener = db.collection("Android Tutorials").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        ListenerRegistration eventListener = db.collection("UsersReport").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Reports").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -117,7 +120,16 @@ public class HomeFragment extends Fragment {
                 for (QueryDocumentSnapshot document : querySnapshot) {
                     DataClass dataClass = document.toObject(DataClass.class);
                     dataClass.setKey(document.getId());
-                    dataList.add(dataClass);
+                    //dataList.add(dataClass);
+
+                    // Only add dataClass to dataList if date is equal to "today"
+                    String myCurrentDate = DateFormat.getDateInstance().format(Calendar.getInstance().getTime());
+
+                    if(dataClass.getDataLang()!=null) {
+                        if (dataClass.getDataLang().equals(myCurrentDate)) {
+                            dataList.add(dataClass);
+                        }
+                    }
                 }
 
                 adapter.notifyDataSetChanged();
@@ -126,17 +138,17 @@ public class HomeFragment extends Fragment {
         });
 
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                searchList(newText);
-                return true;
-            }
-        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                searchList(newText);
+//                return true;
+//            }
+//        });
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,14 +162,17 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void searchList(String text){
-        ArrayList<DataClass> searchList = new ArrayList<>();
-        for (DataClass dataClass: dataList){
-            if (dataClass.getDataTitle().toLowerCase().contains(text.toLowerCase())){
-                searchList.add(dataClass);
-            }
-        }
-        adapter.searchDataList(searchList);
-    }
+//    public void searchList(String text){
+//        ArrayList<DataClass> searchList = new ArrayList<>();
+//        for (DataClass dataClass: dataList){
+//            if (dataClass.getDataTitle().toLowerCase().contains(text.toLowerCase())
+//                    ||
+//                    dataClass.getLang().toLowerCase().contains(text.toLowerCase())
+//            ){
+//                searchList.add(dataClass);
+//            }
+//        }
+//        adapter.searchDataList(searchList);
+//    }
 
 }

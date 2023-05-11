@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:background="@null"
-                android:hint="9987456623"
+                android:hint="__________"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="number"
@@ -100,10 +100,10 @@
                 android:id="@+id/buttongetotp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_button"
                 android:text="@string/get_otp"
                 android:layout_margin="30dp"
                 android:textColor="@color/colortextprimary"
+                android:background="@color/lavender"
                 android:textStyle="bold" />
 
             <ProgressBar

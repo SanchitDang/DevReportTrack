@@ -77,7 +77,6 @@ public class UpdateActivity extends AppCompatActivity {
             key = bundle.getString("Key");
             oldImageURL = bundle.getString("Image");
         }
-        databaseReference = FirebaseDatabase.getInstance().getReference("Android Tutorials").child(key);
 
         updateImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +89,7 @@ public class UpdateActivity extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveData();
+               // saveData();
                 Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -99,66 +98,67 @@ public class UpdateActivity extends AppCompatActivity {
 
 
     // NOT CHANGED TO FIRESTORE!
+//REALTIME DB
+
+//    public void saveData(){
+//        storageReference = FirebaseStorage.getInstance().getReference().child("Android Images").child(uri.getLastPathSegment());
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(UpdateActivity.this);
+//        builder.setCancelable(false);
+//
+//
+//        builder.setView(R.layout.progress_layout);
+//
+//
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+//
+//        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+//                while (!uriTask.isComplete());
+//                Uri urlImage = uriTask.getResult();
+//                imageUrl = urlImage.toString();
+//                updateData();
+//                dialog.dismiss();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                dialog.dismiss();
+//            }
+//        });
+//    }
 
 
-    public void saveData(){
-        storageReference = FirebaseStorage.getInstance().getReference().child("Android Images").child(uri.getLastPathSegment());
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(UpdateActivity.this);
-        builder.setCancelable(false);
-
-
-        builder.setView(R.layout.progress_layout);
-
-
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isComplete());
-                Uri urlImage = uriTask.getResult();
-                imageUrl = urlImage.toString();
-                updateData();
-                dialog.dismiss();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-            }
-        });
-    }
-
-    public void updateData(){
-        title = updateTitle.getText().toString().trim();
-        desc = updateDesc.getText().toString().trim();
-        lang = updateLang.getText().toString();
-
-        DataClass dataClass = new DataClass(title, desc, lang, imageUrl);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Android Tutorials").child(key);
-
-        databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageURL);
-                    reference.delete();
-                    Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UpdateActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    public void updateData(){
+//        title = updateTitle.getText().toString().trim();
+//        desc = updateDesc.getText().toString().trim();
+//        lang = updateLang.getText().toString();
+//
+//        DataClass dataClass = new DataClass(title, desc, lang, imageUrl);
+//
+//        databaseReference = FirebaseDatabase.getInstance().getReference("UsersReport").child(key);
+//
+//        databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if (task.isSuccessful()){
+//                    StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageURL);
+//                    reference.delete();
+//                    Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+//                    finish();
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(UpdateActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
 
 

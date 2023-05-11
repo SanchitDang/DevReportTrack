@@ -64,7 +64,11 @@ public class DetailActivity extends AppCompatActivity {
                         //reference.child(key).removeValue();
                         docRef.delete();
                         Toast.makeText(DetailActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(DetailActivity.this, HistoryActivity.class));
+                        //startActivity(new Intent(DetailActivity.this, HistoryActivity.class));
+                        Intent intent = new Intent(DetailActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+
                         finish();
                     }
                 });

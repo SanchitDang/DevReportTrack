@@ -2,6 +2,7 @@ package com.sanapplications.devreporttrack;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,11 +18,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -34,6 +37,23 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Environment;
+import android.widget.Toast;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
+import android.widget.Toast;
+
+// ...
+
+
 
 public class HistoryFragment extends Fragment {
 
@@ -42,7 +62,8 @@ public class HistoryFragment extends Fragment {
     }
 
     View view;
-    FloatingActionButton fab;
+    //FloatingActionButton fab;
+   // ImageView imgView;
     DatabaseReference databaseReference;
     //ValueEventListener eventListener;
     RecyclerView recyclerView;
@@ -56,12 +77,13 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_history, container, false);
 
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        fab = view.findViewById(R.id.fab);
+        //fab = view.findViewById(R.id.fab);
         searchView = view.findViewById(R.id.search);
+       // imgView = view.findViewById(R.id.recImage);
         searchView.clearFocus();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -77,9 +99,9 @@ public class HistoryFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference tutorialsRef = db.collection("Android Tutorials");
+        CollectionReference tutorialsRef = db.collection("UsersReport");
 
-        db.collection("Android Tutorials").get()
+        db.collection("UsersReport").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot querySnapshot) {
@@ -98,12 +120,9 @@ public class HistoryFragment extends Fragment {
                 });
 
 
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Android Tutorials");
-
         dialog.show();
 
-        ListenerRegistration eventListener = db.collection("Android Tutorials").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        ListenerRegistration eventListener = db.collection("UsersReport").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Reports").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -136,13 +155,44 @@ public class HistoryFragment extends Fragment {
                 return true;
             }
         });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), UploadActivity.class);
-                startActivity(intent);
-            }
-        });
+
+//        imgView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String url = "https://firebasestorage.googleapis.com/v0/b/devreporttrack.appspot.com/o/Android%20Images%2Fmsf%3A73?alt=media&token=44647fde-ae72-46ca-bbb2-65622c25b448";
+//                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+//                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+//                request.setTitle("File Download");
+//                request.setDescription("Downloading file...");
+//                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "file.pdf");
+//
+//                DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+//                long downloadId = downloadManager.enqueue(request);
+//
+//                // Create a broadcast receiver to listen for download completion
+//                BroadcastReceiver onComplete = new BroadcastReceiver() {
+//                    public void onReceive(Context context, Intent intent) {
+//                        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+//                        if (id == downloadId) {
+//                            // Handle the download completion
+//                            Toast.makeText(context, "Download complete!", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                };
+//
+//                // Register the broadcast receiver
+//                getContext().registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+//            }
+//        });
+
+
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), UploadActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return view;
 
@@ -152,7 +202,10 @@ public class HistoryFragment extends Fragment {
     public void searchList(String text){
         ArrayList<DataClass> searchList = new ArrayList<>();
         for (DataClass dataClass: dataList){
-            if (dataClass.getDataTitle().toLowerCase().contains(text.toLowerCase())){
+            if (dataClass.getDataTitle().toLowerCase().contains(text.toLowerCase())
+            ||
+                    dataClass.getLang().toLowerCase().contains(text.toLowerCase())
+            ){
                 searchList.add(dataClass);
             }
         }
