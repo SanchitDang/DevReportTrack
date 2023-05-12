@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -60,6 +61,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Today's Work Report");
 
         recyclerView = view.findViewById(R.id.recyclerView);
         fab = view.findViewById(R.id.fab);
@@ -106,8 +108,8 @@ public class HomeFragment extends Fragment {
         dialog.show();
 
         ListenerRegistration eventListener = db.collection("UsersReport").document(
-               // FirebaseAuth.getInstance().getCurrentUser().getUid()
-                "SANCHITDANG"
+               FirebaseAuth.getInstance().getCurrentUser().getUid()
+               // "SANCHITDANG"
         ).collection("Reports").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {

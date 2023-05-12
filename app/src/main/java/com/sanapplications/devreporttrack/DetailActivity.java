@@ -2,9 +2,11 @@ package com.sanapplications.devreporttrack;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,6 +41,8 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        getSupportActionBar().setTitle("Report Details");
 
         detailDesc = findViewById(R.id.detailDesc);
         buttonOpenPdf = findViewById(R.id.buttonOpenPdf);
@@ -62,8 +67,8 @@ public class DetailActivity extends AppCompatActivity {
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference docRef = db.collection("UsersReport").document(
-                        //FirebaseAuth.getInstance().getCurrentUser().getUid()
-                        "SANCHITDANG"
+                        FirebaseAuth.getInstance().getCurrentUser().getUid()
+                        //"SANCHITDANG"
                 ).collection("Reports").document(key);
 
                 FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -106,6 +111,7 @@ public class DetailActivity extends AppCompatActivity {
         buttonDownloadPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //imageUrl = "https://firebasestorage.googleapis.com/v0/b/devreporttrack.appspot.com/o/Android%20Images%2Fmsf%3A73?alt=media&token=abe190d0-4ce7-44db-9c31-34a131c33aac";
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(
                         imageUrl
                 ));
@@ -121,7 +127,17 @@ public class DetailActivity extends AppCompatActivity {
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
 
                 DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                downloadManager.enqueue(request);
+
+//                DownloadManager.Query query = new DownloadManager.Query();
+//                query.setFilterByStatus(DownloadManager.STATUS_PENDING);
+//                Cursor cursor = downloadManager.query(query);
+//                while (cursor.moveToNext()) {
+//                    @SuppressLint("Range") long requestId = cursor.getLong(cursor.getColumnIndex(DownloadManager.COLUMN_ID));
+//                    downloadManager.remove(requestId);
+//                }
+//                cursor.close();
+
+               downloadManager.enqueue(request);
 
                 Toast.makeText(DetailActivity.this, "Downloading Started", Toast.LENGTH_SHORT).show();
 

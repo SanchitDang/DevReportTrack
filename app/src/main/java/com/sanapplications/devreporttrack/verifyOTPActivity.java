@@ -40,8 +40,7 @@ public class verifyOTPActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_o_t_p);
 
-
-
+        getSupportActionBar().hide();
 
         TextView textView = findViewById(R.id.textmobile);
         textView.setText(String.format(
@@ -124,14 +123,6 @@ public class verifyOTPActivity extends AppCompatActivity {
                                                 }
                                             });
 
-
-//                                            Intent intent = new Intent(verifyOTPActivity.this, RegisterActivity.class);
-//                                            startActivity(intent);
-//                                            finish();
-
-//                                            Intent intent = new Intent(getApplicationContext(), dashboard.class);
-//                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                            startActivity(intent);
 
                                         } else {
                                             Toast.makeText(verifyOTPActivity.this, "Enter the Correct otp", Toast.LENGTH_SHORT).show();

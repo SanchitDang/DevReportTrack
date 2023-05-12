@@ -30,6 +30,8 @@ public class sendotpActivivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sendotp_activivity);
 
+        getSupportActionBar().hide();
+
         final EditText inputmobile = findViewById(R.id.input_mobile_number);
         final Button buttongetotp = findViewById(R.id.buttongetotp);
 

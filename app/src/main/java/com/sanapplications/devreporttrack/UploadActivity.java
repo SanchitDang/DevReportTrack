@@ -44,6 +44,8 @@ public class UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
+        getSupportActionBar().setTitle("Upload Report");
+
         uploadImage = findViewById(R.id.uploadImage);
         uploadDesc = findViewById(R.id.uploadDesc);
         uploadTopic = findViewById(R.id.uploadTopic);
@@ -145,7 +147,10 @@ public class UploadActivity extends AppCompatActivity {
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("UsersReport").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Reports").document(currentDate)
+        db.collection("UsersReport").document(
+                FirebaseAuth.getInstance().getCurrentUser().getUid()
+                //"SANCHITDANG"
+                ).collection("Reports").document(currentDate)
                 .set(dataClass)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

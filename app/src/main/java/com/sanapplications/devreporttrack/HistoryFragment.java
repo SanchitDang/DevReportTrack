@@ -34,6 +34,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -89,6 +90,8 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_history, container, false);
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Work Report History");
+
         recyclerView = view.findViewById(R.id.recyclerView);
         searchView = view.findViewById(R.id.search);
         searchView.clearFocus();
@@ -131,9 +134,9 @@ public class HistoryFragment extends Fragment {
         dialog.show();
 
         ListenerRegistration eventListener = db.collection("UsersReport").document(
-                //FirebaseAuth.getInstance().getCurrentUser().getUid()
-                "SANCHITDANG"
-        ).collection("Reports").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                FirebaseAuth.getInstance().getCurrentUser().getUid()
+                //"SANCHITDANG"
+        ).collection("Reports").orderBy("dataLang", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {

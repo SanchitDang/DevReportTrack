@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "732356340828",
+    "firebase_url": "https://devreporttrack-default-rtdb.firebaseio.com",
     "project_id": "devreporttrack",
     "storage_bucket": "devreporttrack.appspot.com"
   },

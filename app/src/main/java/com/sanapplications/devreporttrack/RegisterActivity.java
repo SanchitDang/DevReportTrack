@@ -49,6 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        getSupportActionBar().setTitle("Registration");
+
         editTextName = findViewById(R.id.editTextName);
         editTextAddress = findViewById(R.id.editTextAddress);
         imageViewPhoto = findViewById(R.id.imageViewPhoto);
@@ -143,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 final Uri resumeUrl = task.getResult();
 
-                            //final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            final String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 final Map<String, Object> user = new HashMap<>();
                                 user.put("name", name);
                                 user.put("address", address);
@@ -151,8 +153,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 user.put("resumeUrl", resumeUrl.toString());
 
                                 db.collection("USERS").document(
-                                       // currentUserId
-                                        "SANCHITDANG"
+                                        currentUserId
+                                       // "SANCHITDANG"
                                         ).set(user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
