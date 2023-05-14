@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
+        replaceFragment(new ProfileFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HistoryFragment());
                     break;
                 case R.id.profile:
-                    replaceFragment(new HistoryFragment());
+                    replaceFragment(new ProfileFragment());
                     break;
             }
 
