@@ -1,4 +1,4 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +26,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sanapplications.devreporttrack.R;
 
 import java.util.concurrent.TimeUnit;
 

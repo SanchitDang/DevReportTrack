@@ -1,16 +1,17 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Activities;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sanapplications.devreporttrack.Activities.MainActivity;
+import com.sanapplications.devreporttrack.Activities.sendotpActivivity;
+import com.sanapplications.devreporttrack.R;
 
 public class SplashActivity extends AppCompatActivity {
 

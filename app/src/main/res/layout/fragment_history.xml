@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:title="Today's Work Report"
-    tools:context=".HistoryFragment">
+    tools:context=".Fragments.HistoryFragment">
 
     <androidx.appcompat.widget.SearchView
         android:layout_width="match_parent"

@@ -1,25 +1,20 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Adapters;
 
-import static android.content.Context.DOWNLOAD_SERVICE;
-
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
-import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.sanapplications.devreporttrack.Activities.DetailActivity;
+import com.sanapplications.devreporttrack.Models.DataModel;
+import com.sanapplications.devreporttrack.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +22,9 @@ import java.util.List;
 public class MyAdapterHistory extends RecyclerView.Adapter<MyViewHolderHistory> {
 
     private Context context;
-    private List<DataClass> dataList;
+    private List<DataModel> dataList;
 
-    public MyAdapterHistory(Context context, List<DataClass> dataList) {
+    public MyAdapterHistory(Context context, List<DataModel> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -93,7 +88,7 @@ public class MyAdapterHistory extends RecyclerView.Adapter<MyViewHolderHistory> 
         return dataList.size();
     }
 
-    public void searchDataList(ArrayList<DataClass> searchList){
+    public void searchDataList(ArrayList<DataModel> searchList){
         dataList = searchList;
         notifyDataSetChanged();
     }

@@ -1,16 +1,11 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DownloadManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -19,6 +14,7 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.sanapplications.devreporttrack.R;
 
 import java.util.concurrent.TimeUnit;
 
@@ -101,7 +97,7 @@ public class sendotpActivivity extends AppCompatActivity {
                                     public void onCodeSent(@NonNull String verficationid, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                                         progressBar.setVisibility(View.GONE);
                                         buttongetotp.setVisibility(View.VISIBLE);
-                                        Intent intent = new Intent(getApplicationContext(),verifyOTPActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), verifyOTPActivity.class);
                                         intent.putExtra("mobile",inputmobile.getText().toString());
                                         intent.putExtra("verfication",verficationid);
                                         startActivity(intent);

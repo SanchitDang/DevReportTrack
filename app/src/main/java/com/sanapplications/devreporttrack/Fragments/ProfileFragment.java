@@ -1,4 +1,4 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,16 +13,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.sanapplications.devreporttrack.Activities.MainActivity;
+import com.sanapplications.devreporttrack.R;
+import com.sanapplications.devreporttrack.Activities.RegisterActivity;
 
 import java.util.Objects;
-import java.util.concurrent.Executor;
 
 
 public class ProfileFragment extends Fragment {

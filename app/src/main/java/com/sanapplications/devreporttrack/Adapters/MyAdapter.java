@@ -1,4 +1,4 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.sanapplications.devreporttrack.Activities.DetailActivity;
+import com.sanapplications.devreporttrack.Models.DataModel;
+import com.sanapplications.devreporttrack.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private Context context;
-    private List<DataClass> dataList;
+    private List<DataModel> dataList;
 
-    public MyAdapter(Context context, List<DataClass> dataList) {
+    public MyAdapter(Context context, List<DataModel> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -60,7 +62,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return dataList.size();
     }
 
-    public void searchDataList(ArrayList<DataClass> searchList){
+    public void searchDataList(ArrayList<DataModel> searchList){
         dataList = searchList;
         notifyDataSetChanged();
     }

@@ -1,4 +1,4 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,6 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.sanapplications.devreporttrack.Fragments.HistoryFragment;
+import com.sanapplications.devreporttrack.Fragments.HomeFragment;
+import com.sanapplications.devreporttrack.Fragments.ProfileFragment;
+import com.sanapplications.devreporttrack.R;
 import com.sanapplications.devreporttrack.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,15 +1,13 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Fragments;
 
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,21 +16,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.sanapplications.devreporttrack.Adapters.MyAdapter;
+import com.sanapplications.devreporttrack.Models.DataModel;
+import com.sanapplications.devreporttrack.R;
+import com.sanapplications.devreporttrack.Activities.UploadActivity;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -49,7 +45,7 @@ public class HomeFragment extends Fragment {
     View view;
     FloatingActionButton fab;
     RecyclerView recyclerView;
-    List<DataClass> dataList;
+    List<DataModel> dataList;
     MyAdapter adapter;
     //SearchView searchView;
 
@@ -121,16 +117,16 @@ public class HomeFragment extends Fragment {
                 dataList.clear();
 
                 for (QueryDocumentSnapshot document : querySnapshot) {
-                    DataClass dataClass = document.toObject(DataClass.class);
-                    dataClass.setKey(document.getId());
+                    DataModel dataModel = document.toObject(DataModel.class);
+                    dataModel.setKey(document.getId());
                     //dataList.add(dataClass);
 
                     // Only add dataClass to dataList if date is equal to "today"
                     String myCurrentDate = DateFormat.getDateInstance().format(Calendar.getInstance().getTime());
 
-                    if(dataClass.getDataLang()!=null) {
-                        if (dataClass.getDataLang().equals(myCurrentDate)) {
-                            dataList.add(dataClass);
+                    if(dataModel.getDataLang()!=null) {
+                        if (dataModel.getDataLang().equals(myCurrentDate)) {
+                            dataList.add(dataModel);
                         }
                     }
                 }

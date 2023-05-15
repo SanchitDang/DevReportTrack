@@ -1,7 +1,7 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Models;
 
 
-public class DataClass {
+public class DataModel {
 
     private String dataTitle;
     private String dataDesc;
@@ -37,13 +37,13 @@ public class DataClass {
         return dataImage;
     }
 
-    public DataClass(String dataTitle, String dataDesc, String dataLang, String dataImage) {
+    public DataModel(String dataTitle, String dataDesc, String dataLang, String dataImage) {
         this.dataTitle = dataTitle;
         this.dataDesc = dataDesc;
         this.dataLang = dataLang;
         this.dataImage = dataImage;
     }
-    public DataClass(){
+    public DataModel(){
 
     }
 }

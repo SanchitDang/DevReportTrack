@@ -1,4 +1,4 @@
-package com.sanapplications.devreporttrack;
+package com.sanapplications.devreporttrack.Activities;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -27,6 +27,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.sanapplications.devreporttrack.Models.DataModel;
+import com.sanapplications.devreporttrack.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -142,7 +144,7 @@ public class UploadActivity extends AppCompatActivity {
 
         String myCurrentDate = DateFormat.getDateInstance().format(Calendar.getInstance().getTime());
 
-        DataClass dataClass = new DataClass(title, desc, myCurrentDate, pdfURL);
+        DataModel dataModel = new DataModel(title, desc, myCurrentDate, pdfURL);
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
@@ -151,7 +153,7 @@ public class UploadActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().getCurrentUser().getUid()
                 //"SANCHITDANG"
                 ).collection("Reports").document(currentDate)
-                .set(dataClass)
+                .set(dataModel)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
