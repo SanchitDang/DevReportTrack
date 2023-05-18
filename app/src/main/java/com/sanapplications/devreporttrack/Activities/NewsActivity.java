@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.sanapplications.devreporttrack.Adapters.NewsCardAdapter;
+import com.sanapplications.devreporttrack.Models.NewsApiModel;
 import com.sanapplications.devreporttrack.Models.NewsArticleModel;
 import com.sanapplications.devreporttrack.R;
+import com.sanapplications.devreporttrack.Services.Api.NewsApiService;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -51,12 +53,12 @@ public class NewsActivity extends AppCompatActivity {
                 .build();
 
         NewsApiService newsApi = retrofit.create(NewsApiService.class);
-        Call<NewsResponse> call = newsApi.getTopHeadlines("us", "f89a0a23e2e4410b98f9b4a18447128e");
-        call.enqueue(new Callback<NewsResponse>() {
+        Call<NewsApiModel> call = newsApi.getTopHeadlines("us", "f89a0a23e2e4410b98f9b4a18447128e");
+        call.enqueue(new Callback<NewsApiModel>() {
             @Override
-            public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
+            public void onResponse(Call<NewsApiModel> call, Response<NewsApiModel> response) {
                 if (response.isSuccessful()) {
-                    NewsResponse newsResponse = response.body();
+                    NewsApiModel newsResponse = response.body();
                     List<NewsArticleModel> articles = newsResponse.getArticles();
 
                     if (articles != null) {
@@ -69,50 +71,11 @@ public class NewsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<NewsResponse> call, Throwable t) {
+            public void onFailure(Call<NewsApiModel> call, Throwable t) {
                 // Handle failure
             }
         });
     }
 }
 
- interface NewsApiService {
-    @GET("v2/top-headlines")
-    Call<NewsResponse> getTopHeadlines(
-            @Query("country") String country,
-            @Query("apiKey") String apiKey
-    );
-}
 
-
- class NewsResponse {
-    private String status;
-    private int totalResults;
-    private List<NewsArticleModel> articles;
-
-    // Constructors, getters, and setters
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getTotalResults() {
-        return totalResults;
-    }
-
-    public void setTotalResults(int totalResults) {
-        this.totalResults = totalResults;
-    }
-
-    public List<NewsArticleModel> getArticles() {
-        return articles;
-    }
-
-    public void setArticles(List<NewsArticleModel> articles) {
-        this.articles = articles;
-    }
-}
