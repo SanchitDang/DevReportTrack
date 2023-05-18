@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.sanapplications.devreporttrack.Models.DataModel;
+import com.sanapplications.devreporttrack.Models.ReportWorkModel;
 import com.sanapplications.devreporttrack.R;
 
 import java.text.DateFormat;
@@ -144,7 +144,7 @@ public class UploadActivity extends AppCompatActivity {
 
         String myCurrentDate = DateFormat.getDateInstance().format(Calendar.getInstance().getTime());
 
-        DataModel dataModel = new DataModel(title, desc, myCurrentDate, pdfURL);
+        ReportWorkModel reportWorkModel = new ReportWorkModel(title, desc, myCurrentDate, pdfURL);
 
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
@@ -153,7 +153,7 @@ public class UploadActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().getCurrentUser().getUid()
                 //"SANCHITDANG"
                 ).collection("Reports").document(currentDate)
-                .set(dataModel)
+                .set(reportWorkModel)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

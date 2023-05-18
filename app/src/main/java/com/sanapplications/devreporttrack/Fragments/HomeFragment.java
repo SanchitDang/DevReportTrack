@@ -26,7 +26,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sanapplications.devreporttrack.Adapters.MyAdapter;
-import com.sanapplications.devreporttrack.Models.DataModel;
+import com.sanapplications.devreporttrack.Models.ReportWorkModel;
 import com.sanapplications.devreporttrack.R;
 import com.sanapplications.devreporttrack.Activities.UploadActivity;
 
@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
     View view;
     FloatingActionButton fab;
     RecyclerView recyclerView;
-    List<DataModel> dataList;
+    List<ReportWorkModel> dataList;
     MyAdapter adapter;
     //SearchView searchView;
 
@@ -117,16 +117,16 @@ public class HomeFragment extends Fragment {
                 dataList.clear();
 
                 for (QueryDocumentSnapshot document : querySnapshot) {
-                    DataModel dataModel = document.toObject(DataModel.class);
-                    dataModel.setKey(document.getId());
+                    ReportWorkModel reportWorkModel = document.toObject(ReportWorkModel.class);
+                    reportWorkModel.setKey(document.getId());
                     //dataList.add(dataClass);
 
                     // Only add dataClass to dataList if date is equal to "today"
                     String myCurrentDate = DateFormat.getDateInstance().format(Calendar.getInstance().getTime());
 
-                    if(dataModel.getDataLang()!=null) {
-                        if (dataModel.getDataLang().equals(myCurrentDate)) {
-                            dataList.add(dataModel);
+                    if(reportWorkModel.getDataLang()!=null) {
+                        if (reportWorkModel.getDataLang().equals(myCurrentDate)) {
+                            dataList.add(reportWorkModel);
                         }
                     }
                 }

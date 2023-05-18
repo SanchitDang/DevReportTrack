@@ -25,7 +25,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sanapplications.devreporttrack.Adapters.MyAdapterHistory;
-import com.sanapplications.devreporttrack.Models.DataModel;
+import com.sanapplications.devreporttrack.Models.ReportWorkModel;
 import com.sanapplications.devreporttrack.R;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class HistoryFragment extends Fragment {
 
     View view;
     RecyclerView recyclerView;
-    List<DataModel> dataList;
+    List<ReportWorkModel> dataList;
     MyAdapterHistory adapter;
     SearchView searchView;
 
@@ -111,9 +111,9 @@ public class HistoryFragment extends Fragment {
                 dataList.clear();
 
                 for (QueryDocumentSnapshot document : querySnapshot) {
-                    DataModel dataModel = document.toObject(DataModel.class);
-                    dataModel.setKey(document.getId());
-                    dataList.add(dataModel);
+                    ReportWorkModel reportWorkModel = document.toObject(ReportWorkModel.class);
+                    reportWorkModel.setKey(document.getId());
+                    dataList.add(reportWorkModel);
 
                     //Toast.makeText(getContext(), "Clicked item: " + dataClass.getKey(), Toast.LENGTH_SHORT).show(); // Add this line to show toast message
 
@@ -175,13 +175,13 @@ public class HistoryFragment extends Fragment {
 
 
     public void searchList(String text){
-        ArrayList<DataModel> searchList = new ArrayList<>();
-        for (DataModel dataModel : dataList){
-            if (dataModel.getDataTitle().toLowerCase().contains(text.toLowerCase())
+        ArrayList<ReportWorkModel> searchList = new ArrayList<>();
+        for (ReportWorkModel reportWorkModel : dataList){
+            if (reportWorkModel.getDataTitle().toLowerCase().contains(text.toLowerCase())
             ||
-                    dataModel.getLang().toLowerCase().contains(text.toLowerCase())
+                    reportWorkModel.getLang().toLowerCase().contains(text.toLowerCase())
             ){
-                searchList.add(dataModel);
+                searchList.add(reportWorkModel);
             }
         }
         adapter.searchDataList(searchList);

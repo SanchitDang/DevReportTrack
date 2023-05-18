@@ -1,7 +1,7 @@
 package com.sanapplications.devreporttrack.Models;
 
 
-public class DataModel {
+public class ReportWorkModel {
 
     private String dataTitle;
     private String dataDesc;
@@ -9,21 +9,28 @@ public class DataModel {
     private String dataImage;
     private String key;
 
-    public String getKey() {
-        return key;
+    public ReportWorkModel(){
+
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public ReportWorkModel(String dataTitle, String dataDesc, String dataLang, String dataImage) {
+        this.dataTitle = dataTitle;
+        this.dataDesc = dataDesc;
+        this.dataLang = dataLang;
+        this.dataImage = dataImage;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public String getDataTitle() {
         return dataTitle;
     }
 
-    public String getLang() {
-        return dataLang;
-    }
+//    public String getLang() {
+//        return dataLang;
+//    }
 
     public String getDataDesc() {
         return dataDesc;
@@ -37,13 +44,8 @@ public class DataModel {
         return dataImage;
     }
 
-    public DataModel(String dataTitle, String dataDesc, String dataLang, String dataImage) {
-        this.dataTitle = dataTitle;
-        this.dataDesc = dataDesc;
-        this.dataLang = dataLang;
-        this.dataImage = dataImage;
+    public void setKey(String key) {
+        this.key = key;
     }
-    public DataModel(){
 
-    }
 }

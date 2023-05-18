@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sanapplications.devreporttrack.Activities.DetailActivity;
-import com.sanapplications.devreporttrack.Models.DataModel;
+import com.sanapplications.devreporttrack.Models.ReportWorkModel;
 import com.sanapplications.devreporttrack.R;
 
 import java.util.ArrayList;
@@ -22,9 +22,9 @@ import java.util.List;
 public class MyAdapterHistory extends RecyclerView.Adapter<MyViewHolderHistory> {
 
     private Context context;
-    private List<DataModel> dataList;
+    private List<ReportWorkModel> dataList;
 
-    public MyAdapterHistory(Context context, List<DataModel> dataList) {
+    public MyAdapterHistory(Context context, List<ReportWorkModel> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -88,7 +88,7 @@ public class MyAdapterHistory extends RecyclerView.Adapter<MyViewHolderHistory> 
         return dataList.size();
     }
 
-    public void searchDataList(ArrayList<DataModel> searchList){
+    public void searchDataList(ArrayList<ReportWorkModel> searchList){
         dataList = searchList;
         notifyDataSetChanged();
     }
