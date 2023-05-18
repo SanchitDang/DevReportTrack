@@ -179,7 +179,7 @@ public class HistoryFragment extends Fragment {
         for (ReportWorkModel reportWorkModel : dataList){
             if (reportWorkModel.getDataTitle().toLowerCase().contains(text.toLowerCase())
             ||
-                    reportWorkModel.getLang().toLowerCase().contains(text.toLowerCase())
+                    reportWorkModel.getDataLang().toLowerCase().contains(text.toLowerCase())
             ){
                 searchList.add(reportWorkModel);
             }
