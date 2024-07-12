@@ -71,7 +71,9 @@ public class ProfileFragment extends Fragment {
 
                 String imageUrl = ds.getString("photoUrl");
                 userName.setText(ds.getString("name"));
+                emailTextView.setText("Email: sanchit@gmail.com");
                 addressTextView.setText(String.format("Address: %s", ds.getString("address")));
+                phoneTextView.setText("Phone: 8810625566");
 
 //                Glide.with(requireContext())
 //                        .load(imageUrl)

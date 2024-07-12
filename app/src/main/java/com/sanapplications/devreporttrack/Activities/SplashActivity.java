@@ -44,20 +44,4 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    protected  void onStart(){
-//        super.onStart();
-//
-//        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-//
-//        if(firebaseUser!=null){
-//            startActivity(new Intent(this, MainActivity.class));
-//            finish();
-//        }else{
-//            startActivity(new Intent(this, sendotpActivivity.class));
-//            finish();
-//        }
-//
-//    }
-
 }
